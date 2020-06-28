@@ -1,4 +1,12 @@
 <?php
+/**
+ * Copyright © 2020 CGI. All rights reserved.
+ * See COPYING.txt for license details.
+ *
+ * @author    CGI <info.de@cgi.com>
+ * @copyright 2020 CGI
+ * @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
 
 namespace Cgi\CustomerPrice\Model\Source;
 
@@ -7,7 +15,9 @@ use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Data\OptionSourceInterface;
 
 /**
- * Options tree for "Customer" field
+ * Class Customer
+ *
+ * @package Cgi\CustomerPrice\Model\Source
  */
 class Customer implements OptionSourceInterface
 {
@@ -24,37 +34,38 @@ class Customer implements OptionSourceInterface
     /**
      * @var array
      */
-    protected $customerTree;
+    protected $customersList;
 
     /**
      * @param CustomerCollectionFactory $customerCollectionFactory
-     * @param RequestInterface $request
+     * @param RequestInterface          $request
      */
     public function __construct(
         CustomerCollectionFactory $customerCollectionFactory,
         RequestInterface $request
-    )
-    {
+    ) {
         $this->customerCollectionFactory = $customerCollectionFactory;
         $this->request = $request;
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function toOptionArray()
-    {
-        return $this->getCustomerTree();
-    }
-
-    /**
-     * Retrieve customer tree
+     * Customer names as options
      *
      * @return array
      */
-    protected function getCustomerTree()
+    public function toOptionArray()
     {
-        if ($this->customerTree === null) {
+        return $this->getCustomersList();
+    }
+
+    /**
+     * Retrieve customers list
+     *
+     * @return array
+     */
+    protected function getCustomersList()
+    {
+        if ($this->customersList === null) {
             $collection = $this->customerCollectionFactory->create();
 
             $collection->addNameToSelect();
@@ -68,8 +79,8 @@ class Customer implements OptionSourceInterface
                 }
                 $customerById[$customerId]['label'] = $customer->getName();
             }
-            $this->customerTree = $customerById;
+            $this->customersList = $customerById;
         }
-        return $this->customerTree;
+        return $this->customersList;
     }
 }

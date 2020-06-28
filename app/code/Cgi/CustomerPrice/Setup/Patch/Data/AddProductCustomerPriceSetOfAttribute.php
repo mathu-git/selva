@@ -14,10 +14,13 @@ use Magento\Catalog\Model\Product;
 use Magento\Eav\Model\Entity\Attribute\Backend\JsonEncoded;
 use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
 use Magento\Eav\Setup\EavSetup;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
+use Zend_Validate_Exception;
 
 /**
  * Class AddProductCustomerPriceAttribute
+ *
  * @package Cgi\CustomerPrice\Setup\Patch\Data
  */
 class AddProductCustomerPriceSetOfAttribute implements DataPatchInterface
@@ -25,21 +28,21 @@ class AddProductCustomerPriceSetOfAttribute implements DataPatchInterface
     /**
      * @var EavSetup
      */
-    private $eavSetup;
+    protected $eavSetup;
 
     /**
      * AddProductCustomerPriceAttribute constructor.
+     *
      * @param EavSetup $eavSetup
      */
     public function __construct(
         EavSetup $eavSetup
-    )
-    {
+    ) {
         $this->eavSetup = $eavSetup;
     }
 
     /**
-     * @inheritDoc
+     * @return array|string[]
      */
     public static function getDependencies()
     {
@@ -47,7 +50,7 @@ class AddProductCustomerPriceSetOfAttribute implements DataPatchInterface
     }
 
     /**
-     * @inheritDoc
+     * @return array|string[]
      */
     public function getAliases()
     {
@@ -55,7 +58,9 @@ class AddProductCustomerPriceSetOfAttribute implements DataPatchInterface
     }
 
     /**
-     * @inheritDoc
+     * @return AddProductCustomerPriceSetOfAttribute|void
+     * @throws LocalizedException
+     * @throws Zend_Validate_Exception
      */
     public function apply()
     {

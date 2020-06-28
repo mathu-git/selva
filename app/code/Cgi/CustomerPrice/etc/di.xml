@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © 2020 CGI. All rights reserved.
+  ~ See COPYING.txt for license details.
+  ~
+  ~ @author    CGI <info.de@cgi.com>
+  ~ @copyright 2020 CGI
+  ~ @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Cgi\CustomerPrice\Api\Data\CustomerPriceInterface" type="Cgi\CustomerPrice\Model\CustomerPrice"/>
+    <preference for="Cgi\CustomerPrice\Api\CustomerPriceRepositoryInterface"
+                type="Cgi\CustomerPrice\Model\CustomerPriceRepository"/>
+    <type name="Cgi\CustomerPrice\Model\ResourceModel\CustomerPrice\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">cgi_customer_price</argument>
+            <argument name="resourceModel" xsi:type="string">
+                Cgi\CustomerPrice\Model\ResourceModel\CustomerPrice
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Model\Product\Type\Price">
+        <plugin name="customer_price_to_base_price"
+                type="Cgi\CustomerPrice\Plugin\AddCustomerPricesToBasePricePlugin"/>
+    </type>
+    <type name="Magento\Framework\App\Http\Context">
+        <plugin name="customer_price_cache"
+                type="Cgi\CustomerPrice\Plugin\Cache\ChangeCacheIdentifier"
+                sortOrder="10"
+                disabled="false"/>
+    </type>
+    <type name="Magento\Framework\View\Element\AbstractBlock">
+        <plugin name="customer_price_cache_widget"
+                type="Cgi\CustomerPrice\Plugin\Cache\ChangeWidgetCacheIdentifier"
+                sortOrder="10"
+                disabled="false"/>
+    </type>
+</config>

@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © 2020 CGI. All rights reserved.
+  ~ See COPYING.txt for license details.
+  ~
+  ~ @author    CGI <info.de@cgi.com>
+  ~ @copyright 2020 CGI
+  ~ @license   http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+  -->
+<config>
+    <type name="Magento\Catalog\Pricing\Price\RegularPrice">
+        <plugin name="customer_price_to_regular_price"
+                type="Cgi\CustomerPrice\Plugin\Pricing\Price\AddCustomerPricesToRegularPricePlugin" sortOrder="20"
+                disabled="false"/>
+    </type>
+    <type name="Magento\Catalog\Pricing\Price\SpecialPrice">
+        <plugin name="customer_price_to_special_price"
+                type="Cgi\CustomerPrice\Plugin\Pricing\Price\AddCustomerPricesToSpecialPricePlugin" sortOrder="20"
+                disabled="false"/>
+    </type>
+    <type name="Magento\Catalog\Pricing\Price\TierPrice">
+        <plugin name="customer_price_to_tier_price"
+                type="Cgi\CustomerPrice\Plugin\Pricing\Price\AddCustomerPricesToTierPricePlugin" sortOrder="20"
+                disabled="false"/>
+    </type>
+</config>

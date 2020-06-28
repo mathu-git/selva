@@ -16,24 +16,40 @@ use Magento\Framework\App\RequestInterface;
 
 /**
  * Class CustomerPrice
+ *
  * @package Cgi\CustomerPrice\Ui\DataProvider\Product\Form\Modifier
  */
 class CustomerPrice extends AbstractModifier
 {
+    /**
+     * @var RequestInterface
+     */
     protected $request;
-    private $locator;
 
+    /**
+     * @var LocatorInterface
+     */
+    protected $locator;
+
+    /**
+     * CustomerPrice constructor.
+     *
+     * @param RequestInterface $request
+     * @param LocatorInterface $locator
+     */
     public function __construct(
         RequestInterface $request,
         LocatorInterface $locator
-    )
-    {
+    ) {
         $this->request = $request;
         $this->locator = $locator;
     }
 
     /**
-     * {@inheritDoc}
+     * Modify data
+     *
+     * @param array $data
+     * @return array
      */
     public function modifyData(array $data)
     {
@@ -41,7 +57,10 @@ class CustomerPrice extends AbstractModifier
     }
 
     /**
-     * {@inheritDoc}
+     * Modify meta
+     *
+     * @param array $meta
+     * @return array
      */
     public function modifyMeta(array $meta)
     {
@@ -75,7 +94,7 @@ class CustomerPrice extends AbstractModifier
      *
      * @return null|string
      */
-    private function getProductType()
+    protected function getProductType()
     {
         return (string)$this->request->getParam('type', $this->locator->getProduct()->getTypeId());
     }
