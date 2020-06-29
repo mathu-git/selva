@@ -48,7 +48,10 @@
                         </item>
                     </argument>
                     <settings>
-                        <required>false</required>
+                        <required>true</required>
+                        <validation>
+                            <rule name="required-entry" xsi:type="boolean">true</rule>
+                        </validation>
                         <elementTmpl>ui/grid/filters/elements/ui-select</elementTmpl>
                         <componentType>field</componentType>
                         <label translate="true">Customer</label>
@@ -61,6 +64,7 @@
                             <item name="fit" xsi:type="boolean">false</item>
                             <item name="dataScope" xsi:type="string">price_per_customer</item>
                             <item name="validation" xsi:type="array">
+                                <item name="required-entry" xsi:type="boolean">true</item>
                                 <item name="validate-not-negative-number" xsi:type="boolean">true</item>
                             </item>
                             <item name="notice" xsi:type="string">Price per customer</item>
