@@ -155,7 +155,7 @@ class CustomerPriceRepository implements CustomerPriceRepositoryInterface
             if ($editMode) {
                 $price->setData('_edit_mode', true);
             }
-            $price->load($customerPriceId);
+            $this->customerPriceResourceModel->load($price,$customerPriceId);
             if (!$price->getId()) {
                 throw new NoSuchEntityException(__('Requested Record doesn\'t exist'));
             }
