@@ -92,8 +92,8 @@ class AddProductCustomerPriceSetOfAttribute implements DataPatchInterface
         $entityTypeId = $eavSetup->getEntityTypeId('catalog_product'); /* get entity type id so that attribute are only assigned to catalog_product */
         $attributeSetIds = $eavSetup->getAllAttributeSetIds($entityTypeId);
         foreach ($attributeSetIds as $attributeSetId) {
-            $eavSetup->addAttributeGroup($entityTypeId, $attributeSetId, 'Product customer price', 200);
-            $attributeGroupId = $eavSetup->getAttributeGroupId($entityTypeId, $attributeSetId, 'Product customer price');
+            $eavSetup->addAttributeGroup($entityTypeId, $attributeSetId, 'Customer prices', 200);
+            $attributeGroupId = $eavSetup->getAttributeGroupId($entityTypeId, $attributeSetId, 'customer-prices');
             // Add existing attribute to group
             $attributeId = $eavSetup->getAttributeId($entityTypeId, 'customer_price');
             $eavSetup->addAttributeToGroup($entityTypeId, $attributeSetId, $attributeGroupId, $attributeId, null);

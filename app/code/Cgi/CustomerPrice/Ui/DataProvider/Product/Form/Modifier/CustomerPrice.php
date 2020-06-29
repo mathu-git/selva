@@ -65,7 +65,7 @@ class CustomerPrice extends AbstractModifier
     public function modifyMeta(array $meta)
     {
         if (($this->getProductType() == "simple")) {
-            $config = $meta['product-customer-price']
+            $config = $meta['customer-prices']
             ['children']
             ['container_customer_price']
             ['children']
@@ -76,7 +76,7 @@ class CustomerPrice extends AbstractModifier
             $config['visible'] = '0';
             $config['formElement'] = 'hidden';
 
-            $meta['product-customer-price']
+            $meta['customer-prices']
             ['children']
             ['container_customer_price']
             ['children']

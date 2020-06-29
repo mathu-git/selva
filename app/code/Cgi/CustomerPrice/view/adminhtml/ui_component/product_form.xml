@@ -9,7 +9,7 @@
   -->
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
-    <fieldset name="product-customer-price">
+    <fieldset name="customer-prices">
         <dynamicRows name="customer_price">
             <settings>
                 <addButtonLabel translate="true">Add</addButtonLabel>
@@ -51,19 +51,19 @@
                         <required>false</required>
                         <elementTmpl>ui/grid/filters/elements/ui-select</elementTmpl>
                         <componentType>field</componentType>
-                        <label translate="true">Customer Name</label>
+                        <label translate="true">Customer</label>
                     </settings>
                 </field>
                 <field name="price_per_customer" formElement="input">
                     <argument name="data" xsi:type="array">
                         <item name="config" xsi:type="array">
-                            <item name="label" xsi:type="string" translate="true">Customer Price</item>
+                            <item name="label" xsi:type="string" translate="true">Price</item>
                             <item name="fit" xsi:type="boolean">false</item>
                             <item name="dataScope" xsi:type="string">price_per_customer</item>
                             <item name="validation" xsi:type="array">
                                 <item name="validate-not-negative-number" xsi:type="boolean">true</item>
                             </item>
-                            <item name="notice" xsi:type="string">Price per Customer</item>
+                            <item name="notice" xsi:type="string">Price per customer</item>
                         </item>
                     </argument>
                 </field>
