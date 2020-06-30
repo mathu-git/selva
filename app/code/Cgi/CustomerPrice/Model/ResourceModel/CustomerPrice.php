@@ -26,11 +26,15 @@ use Magento\Framework\Model\ResourceModel\Db\Context;
 class CustomerPrice extends AbstractDb
 {
     /**
+     * Eav config
+     *
      * @var Config
      */
     protected $eavConfig;
 
     /**
+     * Adapter interface
+     *
      * @var AdapterInterface
      */
     protected $connection;
@@ -38,8 +42,8 @@ class CustomerPrice extends AbstractDb
     /**
      * CustomerPrice constructor.
      *
-     * @param Context $context
-     * @param Config  $eavConfig
+     * @param Context $context   Context
+     * @param Config  $eavConfig Eav configuration
      */
     public function __construct(
         Context $context,
@@ -64,7 +68,8 @@ class CustomerPrice extends AbstractDb
     /**
      * Get product type id
      *
-     * @param  int $productId
+     * @param int $productId Product id
+     *
      * @return null
      */
     public function getTypeId($productId)
@@ -85,7 +90,8 @@ class CustomerPrice extends AbstractDb
     /**
      * Get entity ids
      *
-     * @param  array $referenceIds
+     * @param array $referenceIds Entity ids
+     *
      * @return array
      * @throws Exception
      */
@@ -106,8 +112,9 @@ class CustomerPrice extends AbstractDb
     /**
      * Get data by customer id for the products
      *
-     * @param  array $ids
-     * @param  int   $customerId
+     * @param array $ids        Entity ids
+     * @param int   $customerId Customer id
+     *
      * @return array
      */
     public function getCalculatedProductsDataByCustomer(array $ids, $customerId)
@@ -124,8 +131,9 @@ class CustomerPrice extends AbstractDb
     /**
      * Get data by customer id for a product
      *
-     * @param  int $id
-     * @param  int $customerId
+     * @param int $id         Entity id
+     * @param int $customerId Customer id
+     *
      * @return array
      */
     public function getCalculatedProductDataByCustomer($id, $customerId)
@@ -142,8 +150,10 @@ class CustomerPrice extends AbstractDb
     /**
      * Delete customer price in custom table
      *
-     * @param  int $productId
-     * @param  int $customerId
+     * @param int $productId  Product id
+     * @param int $customerId Customer id
+     *
+     * @return $this|void
      * @throws LocalizedException
      */
     public function deleteProductCustomerPrice($productId, $customerId)
@@ -161,8 +171,10 @@ class CustomerPrice extends AbstractDb
     /**
      * Delete row in custom entity decimal price table
      *
-     * @param  int $entityId
-     * @param  int $customerId
+     * @param int $entityId   Entity id
+     * @param int $customerId Customer id
+     *
+     * @return $this|void
      * @throws LocalizedException
      */
     public function deleteRowInCgiCatalogProductEntityDecimalCustomerPrice($entityId, $customerId)
@@ -183,8 +195,10 @@ class CustomerPrice extends AbstractDb
     /**
      * Delete row in custom index price table
      *
-     * @param int $entityId
-     * @param int $customerId
+     * @param int $entityId   Entity id
+     * @param int $customerId Customer id
+     *
+     * @return $this|void
      */
     public function deleteRowInCgiCatalogProductIndexPrice($entityId, $customerId)
     {
@@ -200,7 +214,8 @@ class CustomerPrice extends AbstractDb
     /**
      * Return array customer_id by product_id
      *
-     * @param  int $productId
+     * @param int $productId product id
+     *
      * @return array
      * @throws LocalizedException
      */
@@ -218,7 +233,8 @@ class CustomerPrice extends AbstractDb
     /**
      * Check if the customer is assigned price in custom table
      *
-     * @param int $customerId
+     * @param int $customerId Customer id
+     *
      * @return bool
      * @throws LocalizedException
      */

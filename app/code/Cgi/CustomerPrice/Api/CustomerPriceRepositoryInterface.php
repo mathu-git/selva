@@ -24,8 +24,9 @@ interface CustomerPriceRepositoryInterface
     /**
      * Save Customer Price
      *
-     * @param  CustomerPriceInterface $price
-     * @param  bool                   $saveOptions
+     * @param CustomerPriceInterface $price       Customer price
+     * @param bool                   $saveOptions Save or not
+     *
      * @return CustomerPriceInterface
      */
     public function save(CustomerPriceInterface $price, $saveOptions = false);
@@ -33,7 +34,8 @@ interface CustomerPriceRepositoryInterface
     /**
      * Delete Customer Price
      *
-     * @param  CustomerPriceInterface $price
+     * @param CustomerPriceInterface $price Customer price
+     *
      * @return bool return true if deleted
      */
     public function delete(CustomerPriceInterface $price);
@@ -41,8 +43,9 @@ interface CustomerPriceRepositoryInterface
     /**
      * Retrieve customer price matching the specified criteria.
      *
-     * @param  SearchCriteriaInterface $searchCriteria
-     * @param  bool                    $returnRawObjects
+     * @param SearchCriteriaInterface $searchCriteria   Search criteria
+     * @param bool                    $returnRawObjects Return objects or not
+     *
      * @return SearchResultsInterface
      */
     public function getList(SearchCriteriaInterface $searchCriteria, $returnRawObjects = false);

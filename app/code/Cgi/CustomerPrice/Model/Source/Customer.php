@@ -22,23 +22,29 @@ use Magento\Framework\Data\OptionSourceInterface;
 class Customer implements OptionSourceInterface
 {
     /**
+     * Customer collection
+     *
      * @var CustomerCollectionFactory
      */
     protected $customerCollectionFactory;
 
     /**
+     * Request interface
+     *
      * @var RequestInterface
      */
     protected $request;
 
     /**
+     * List of customer names
+     *
      * @var array
      */
     protected $customersList;
 
     /**
-     * @param CustomerCollectionFactory $customerCollectionFactory
-     * @param RequestInterface          $request
+     * @param CustomerCollectionFactory $customerCollectionFactory Customer collection
+     * @param RequestInterface          $request                   Request
      */
     public function __construct(
         CustomerCollectionFactory $customerCollectionFactory,

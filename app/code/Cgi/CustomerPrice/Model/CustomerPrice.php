@@ -72,7 +72,8 @@ class CustomerPrice extends AbstractModel implements CustomerPriceInterface, Ide
     /**
      * Set Id
      *
-     * @param  mixed $entityId
+     * @param mixed $entityId Entity id
+     *
      * @return CustomerPrice
      */
     public function setId($entityId)
@@ -83,7 +84,8 @@ class CustomerPrice extends AbstractModel implements CustomerPriceInterface, Ide
     /**
      * Set Attribute Type
      *
-     * @param  $AttributeType
+     * @param $AttributeType Attribute type
+     *
      * @return CustomerPrice|void
      */
     public function setAttributeType($AttributeType)
@@ -94,7 +96,8 @@ class CustomerPrice extends AbstractModel implements CustomerPriceInterface, Ide
     /**
      * Set Customer Id
      *
-     * @param  $customerId
+     * @param $customerId Customer id
+     *
      * @return CustomerPrice
      */
     public function setCustomerId($customerId)
@@ -105,7 +108,8 @@ class CustomerPrice extends AbstractModel implements CustomerPriceInterface, Ide
     /**
      * Set Product Id
      *
-     * @param  $productId
+     * @param $productId Product id
+     *
      * @return CustomerPrice
      */
     public function setProductId($productId)
@@ -116,7 +120,8 @@ class CustomerPrice extends AbstractModel implements CustomerPriceInterface, Ide
     /**
      * Set Price
      *
-     * @param  $customerPrice
+     * @param $customerPrice Customer price
+     *
      * @return CustomerPrice
      */
     public function setPrice($customerPrice)

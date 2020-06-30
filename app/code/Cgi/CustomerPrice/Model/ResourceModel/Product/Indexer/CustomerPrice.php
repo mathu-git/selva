@@ -25,6 +25,11 @@ use Magento\Framework\Module\Manager;
 use Zend_Db_Expr;
 use Zend_Db_Select;
 
+/**
+ * Class CustomerPrice
+ *
+ * @package Cgi\CustomerPrice\Model\ResourceModel\Product\Indexer
+ */
 class CustomerPrice extends DefaultPrice
 {
     /**
@@ -32,7 +37,7 @@ class CustomerPrice extends DefaultPrice
      *
      * @var string
      */
-    protected $_typeId;
+    protected $typeId;
 
     /**
      * Product Type is composite flag
@@ -56,25 +61,29 @@ class CustomerPrice extends DefaultPrice
     protected $eventManager = null;
 
     /**
+     * Customer price resource model
+     *
      * @var ResourceCustomerPrice
      */
     protected $customerPriceResourceModel;
 
     /**
+     * Check if entity exists variable
+     *
      * @var bool|null
      */
-    private $hasEntity = null;
+    private $_hasEntity = null;
 
     /**
      * CustomerPrice constructor.
      *
-     * @param Context               $context
-     * @param StrategyInterface     $tableStrategy
-     * @param Config                $eavConfig
-     * @param ManagerInterface      $eventManager
-     * @param Manager               $moduleManager
-     * @param string|null           $connectionName
-     * @param ResourceCustomerPrice $customerPriceResourceModel
+     * @param Context               $context                    Context
+     * @param StrategyInterface     $tableStrategy              Table strategy
+     * @param Config                $eavConfig                  Eav configuration
+     * @param ManagerInterface      $eventManager               Event manager
+     * @param Manager               $moduleManager              Module manager
+     * @param ResourceCustomerPrice $customerPriceResourceModel Customer price resource model
+     * @param string|null           $connectionName             Connection name
      */
     public function __construct(
         Context $context,
@@ -82,8 +91,8 @@ class CustomerPrice extends DefaultPrice
         Config $eavConfig,
         ManagerInterface $eventManager,
         Manager $moduleManager,
-        $connectionName = null,
-        ResourceCustomerPrice $customerPriceResourceModel
+        ResourceCustomerPrice $customerPriceResourceModel,
+        $connectionName = null
     ) {
         $this->eventManager = $eventManager;
         $this->moduleManager = $moduleManager;
@@ -114,12 +123,13 @@ class CustomerPrice extends DefaultPrice
     /**
      * Set Product Type code
      *
-     * @param string $typeCode
+     * @param string $typeCode Product type code
+     *
      * @return $this
      */
     public function setTypeId($typeCode)
     {
-        $this->_typeId = $typeCode;
+        $this->typeId = $typeCode;
 
         return $this;
     }
@@ -132,7 +142,7 @@ class CustomerPrice extends DefaultPrice
      */
     public function getTypeId()
     {
-        if ($this->_typeId === null) {
+        if ($this->typeId === null) {
             throw new LocalizedException(
                 __('A product type is not defined for the indexer.')
             );
@@ -144,7 +154,8 @@ class CustomerPrice extends DefaultPrice
     /**
      * Set Product Type Composite flag
      *
-     * @param  bool $flag
+     * @param bool $flag Flag to set
+     *
      * @return $this
      */
     public function setIsComposite($flag)
@@ -188,8 +199,9 @@ class CustomerPrice extends DefaultPrice
     /**
      * Reindex temporary (price result data) for defined product(s)
      *
-     * @param  array $entityIds
-     * @param  array $customerIds
+     * @param array $entityIds   Entity ids
+     * @param array $customerIds Customer ids
+     *
      * @return $this
      * @throws LocalizedException
      */
@@ -203,29 +215,32 @@ class CustomerPrice extends DefaultPrice
     /**
      * Reindex prices.
      *
-     * @param array $entityIds
-     * @param array $customerIds
+     * @param array $entityIds   Entity ids
+     * @param array $customerIds Customer ids
+     *
      * @return $this
      * @throws LocalizedException
      * @throws Exception
      */
     protected function reindexCustomer($entityIds, $customerIds)
     {
-        if (!empty($entityIds) || $this->hasEntity()) {
-            $this->_prepareFinalPriceDataCustomer($entityIds, $customerIds);
-            $this->_movePriceDataToIndexTable($entityIds);
+        if (!empty($entityIds) || $this->_hasEntity()) {
+            $this->prepareFinalPriceDataCustomer($entityIds, $customerIds);
+            $this->movePriceDataToIndexTable($entityIds);
         }
 
         return $this;
     }
 
     /**
+     * Check if entity exists
+     *
      * @return bool|null
      * @throws LocalizedException
      */
     protected function hasEntity()
     {
-        if ($this->hasEntity === null) {
+        if ($this->_hasEntity === null) {
             $reader = $this->getConnection();
 
             $select = $reader->select()->from(
@@ -236,22 +251,23 @@ class CustomerPrice extends DefaultPrice
                 $this->getTypeId()
             );
 
-            $this->hasEntity = (int)$reader->fetchOne($select) > 0;
+            $this->_hasEntity = (int)$reader->fetchOne($select) > 0;
         }
 
-        return $this->hasEntity;
+        return $this->_hasEntity;
     }
 
     /**
      * Prepare products default final price in temporary index table
      *
-     * @param  array $entityIds
-     * @param  array $customerIds
+     * @param array $entityIds   Entity ids
+     * @param array $customerIds Customer ids
+     *
      * @return CustomerPrice
      * @throws LocalizedException
      * @throws Exception
      */
-    protected function _prepareFinalPriceDataCustomer($entityIds, $customerIds)
+    protected function prepareFinalPriceDataCustomer($entityIds, $customerIds)
     {
         return $this->prepareFinalPriceDataForTypeCustomer($entityIds, $this->getTypeId(), $customerIds);
     }
@@ -259,19 +275,20 @@ class CustomerPrice extends DefaultPrice
     /**
      * Prepare products default final price in temporary index table
      *
-     * @param  array $entityIds
-     * @param  $type
-     * @param  array $customerIds
+     * @param array $entityIds   Entity ids
+     * @param $type        Product type
+     * @param array $customerIds Customer ids
+     *
      * @return $this
      * @throws Exception
      */
     protected function prepareFinalPriceDataForTypeCustomer($entityIds, $type, $customerIds)
     {
-        $this->_prepareDefaultFinalPriceTable();
+        $this->prepareDefaultFinalPriceTable();
         $this->prepareCgiCatalogProductEntityDecimalCustomerPrice($entityIds, $customerIds);
 
         $select = $this->getSelect($entityIds, $type);
-        $query = $select->insertFromSelect($this->_getDefaultFinalPriceTable(), [], false);
+        $query = $select->insertFromSelect($this->getDefaultFinalPriceTable(), [], false);
         $this->getConnection()->query($query);
 
         return $this;
@@ -282,9 +299,9 @@ class CustomerPrice extends DefaultPrice
      *
      * @return $this|CustomerPrice
      */
-    protected function _prepareDefaultFinalPriceTable()
+    protected function prepareDefaultFinalPriceTable()
     {
-        $this->getConnection()->delete($this->_getDefaultFinalPriceTable());
+        $this->getConnection()->delete($this->getDefaultFinalPriceTable());
 
         return $this;
     }
@@ -294,7 +311,7 @@ class CustomerPrice extends DefaultPrice
      *
      * @return string
      */
-    protected function _getDefaultFinalPriceTable()
+    protected function getDefaultFinalPriceTable()
     {
         return $this->tableStrategy->getTableName('cgi_catalog_product_index_price_final');
     }
@@ -302,8 +319,10 @@ class CustomerPrice extends DefaultPrice
     /**
      * Prepare table cgi_catalog_product_entity_decimal_customer_price
      *
-     * @param array $entityIds
-     * @param array $customerIds
+     * @param array $entityIds   Entity ids
+     * @param array $customerIds Customer ids
+     *
+     * @return $this|void
      */
     protected function prepareCgiCatalogProductEntityDecimalCustomerPrice($entityIds, $customerIds)
     {
@@ -353,8 +372,9 @@ class CustomerPrice extends DefaultPrice
     /**
      * Framing select query with conditions
      *
-     * @param  array|null $entityIds
-     * @param  null       $type
+     * @param array|null $entityIds Entity ids
+     * @param null       $type      Product type
+     *
      * @return Select
      * @throws Exception
      */
@@ -393,7 +413,7 @@ class CustomerPrice extends DefaultPrice
         }
         $select->columns(['tax_class_id' => $taxClassId]);
 
-        $newPrice = $this->_addAttributeToSelectPriceCustomer(
+        $newPrice = $this->addAttributeToSelectPriceCustomer(
             $select,
             'price',
             'e.' . $metadata->getLinkField(),
@@ -422,12 +442,15 @@ class CustomerPrice extends DefaultPrice
     /**
      * Join tables for select query
      *
-     * @param  $connection
+     * @param $connection Connection
+     *
      * @return Select
      */
     protected function joinBaseTable($connection)
     {
         /**
+         * Select statement
+         *
          * @var Select $select
          */
         $select = $connection->select()->from(
@@ -463,7 +486,7 @@ class CustomerPrice extends DefaultPrice
      *
      * @return string
      */
-    protected function _getWebsiteDateTable()
+    protected function getWebsiteDateTable()
     {
         return $this->getTable('catalog_product_index_website');
     }
@@ -471,17 +494,18 @@ class CustomerPrice extends DefaultPrice
     /**
      * Custom Attribute to be selected
      *
-     * @param  $select
-     * @param  $attrCode
-     * @param  $entity
-     * @param  $store
-     * @param  null $condition
-     * @param  bool $required
+     * @param $select    Select statement
+     * @param $attrCode  Attribute code
+     * @param $entity    Product
+     * @param $store     Store
+     * @param null $condition Condition for select
+     * @param bool $required  Required or not
+     *
      * @return Zend_Db_Expr
      * @throws Exception
      * @throws LocalizedException
      */
-    protected function _addAttributeToSelectPriceCustomer(
+    protected function addAttributeToSelectPriceCustomer(
         $select,
         $attrCode,
         $entity,
@@ -495,8 +519,7 @@ class CustomerPrice extends DefaultPrice
         $attributePriceId = $this->customerPriceResourceModel->getPriceAttributeId();
 
         if ($attributeId == $attributePriceId) {
-            $attributeTable =
-                $this->getTable('cgi_catalog_product_entity_decimal_customer_price');
+            $attributeTable = $this->getTable('cgi_catalog_product_entity_decimal_customer_price');
         } else {
             $attributeTable = $attribute->getBackend()->getTable();
         }
@@ -553,11 +576,12 @@ class CustomerPrice extends DefaultPrice
     /**
      * Mode Final Prices index to primary temporary index table
      *
-     * @param int[]|null $entityIds
+     * @param int[]|null $entityIds Entity ids
+     *
      * @return $this
      * @throws Exception
      */
-    protected function _movePriceDataToIndexTable($entityIds = null)
+    protected function movePriceDataToIndexTable($entityIds = null)
     {
         $columns = [
             'entity_id' => 'entity_id',
@@ -572,7 +596,7 @@ class CustomerPrice extends DefaultPrice
 
         $connection = $this->getConnection();
 
-        $table = $this->_getDefaultFinalPriceTable();
+        $table = $this->getDefaultFinalPriceTable();
         $select = $connection->select()->from($table, $columns);
         $indexTable = $this->getTable('cgi_catalog_product_index_price');
 
@@ -599,8 +623,9 @@ class CustomerPrice extends DefaultPrice
     /**
      * Retrieve temporary index table name
      *
-     * @param  string $table
-     * @return string
+     * @param string $table Table name
+     *
+     * @return                                        string
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function getIdxTable($table = null)

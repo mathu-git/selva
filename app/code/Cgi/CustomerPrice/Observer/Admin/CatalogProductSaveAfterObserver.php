@@ -32,36 +32,50 @@ use Magento\Framework\Message\ManagerInterface;
 class CatalogProductSaveAfterObserver implements ObserverInterface
 {
     /**
+     * Indexer registry
+     *
      * @var IndexerRegistry
      */
     protected $indexerRegistry;
 
     /**
+     * Customer price factory
+     *
      * @var CustomerPriceFactory
      */
     protected $customerPriceFactory;
 
     /**
+     * Customer price repository
+     *
      * @var CustomerPriceRepository
      */
     protected $customerPriceRepository;
 
     /**
+     * Serializer interface
+     *
      * @var SerializerInterface
      */
     protected $serializer;
 
     /**
+     * Resource customer price
+     *
      * @var ResourceCustomerPrice
      */
     protected $customerPriceResourceModel;
 
     /**
+     * Index customer price
+     *
      * @var IndexCustomerPrice
      */
     protected $indexer;
 
     /**
+     * Manager Interface
+     *
      * @var ManagerInterface
      */
     protected $messageManager;
@@ -70,13 +84,13 @@ class CatalogProductSaveAfterObserver implements ObserverInterface
     /**
      * CatalogProductSaveAfterObserver constructor.
      *
-     * @param ResourceCustomerPrice $customerPriceResourceModel
-     * @param IndexCustomerPrice $indexer
-     * @param IndexerRegistry $indexerRegistry
-     * @param CustomerPriceFactory $customerPriceFactory
-     * @param CustomerPriceRepository $customerPriceRepository
-     * @param SerializerInterface $serializer
-     * @param ManagerInterface $messageManager
+     * @param ResourceCustomerPrice   $customerPriceResourceModel Customer price resource model
+     * @param IndexCustomerPrice      $indexer                    Customer price indexer
+     * @param IndexerRegistry         $indexerRegistry            Indexer registry
+     * @param CustomerPriceFactory    $customerPriceFactory       Customer price factory
+     * @param CustomerPriceRepository $customerPriceRepository    Customer price repository
+     * @param SerializerInterface     $serializer                 Serializer
+     * @param ManagerInterface        $messageManager             Message manager
      */
     public function __construct(
         ResourceCustomerPrice $customerPriceResourceModel,
@@ -99,7 +113,8 @@ class CatalogProductSaveAfterObserver implements ObserverInterface
     /**
      * Save and reindex after the product is saved with customer price
      *
-     * @param  EventObserver $observer
+     * @param EventObserver $observer Product save after observer
+     *
      * @return $this|void
      * @throws LocalizedException
      */
@@ -107,6 +122,8 @@ class CatalogProductSaveAfterObserver implements ObserverInterface
     {
 
         /**
+         * Get Product Object
+         *
          * @var Product $product
          */
         $product = $observer->getEvent()->getProduct();
@@ -120,7 +137,10 @@ class CatalogProductSaveAfterObserver implements ObserverInterface
         $updatedCustomerIds = [];
         $savedCustomerIds = [];
 
-        if (($productTypeId == 'simple') && isset($customerPrice) && (!empty($customerPriceData))) {
+        if ($productTypeId == 'simple'
+            && isset($customerPrice)
+            && !empty($customerPriceData)
+        ) {
             $existingCustomerIds = $this->customerPriceResourceModel->getCustomerIdsByProductId($productId);
             foreach ($customerPriceData as $customerPrice) {
                 $data = [
@@ -159,8 +179,10 @@ class CatalogProductSaveAfterObserver implements ObserverInterface
     /**
      * Clean old data and update
      *
-     * @param  $productId
-     * @param  $customerId
+     * @param $productId  Productid
+     * @param $customerId Customerid
+     *
+     * @return $this|void
      * @throws LocalizedException
      */
     protected function deleteData($productId, $customerId)
@@ -179,8 +201,10 @@ class CatalogProductSaveAfterObserver implements ObserverInterface
     /**
      * Delete the customers deleted in admin from the custom table
      *
-     * @param  array $customersToBeDeleted
-     * @param  $productId
+     * @param array $customersToBeDeleted Customers to be deleted
+     * @param $productId            Productid
+     *
+     * @return $this|void
      * @throws LocalizedException
      */
     protected function deleteCustomers($customersToBeDeleted, $productId)

@@ -22,16 +22,22 @@ use Cgi\CustomerPrice\Model\ResourceModel\CustomerPrice as ResourceCustomerPrice
 class CacheIdentifier
 {
     /**
+     * Session factory
+     *
      * @var SessionFactory
      */
     protected $sessionFactory;
 
     /**
+     * Customer price resource model
+     *
      * @var ResourceCustomerPrice
      */
     protected $resourceCustomerPrice;
 
     /**
+     * Price set to customer id
+     *
      * @var int|null
      */
     protected $customerIdWithPrice = null;
@@ -39,8 +45,8 @@ class CacheIdentifier
     /**
      * CacheIdentifier constructor.
      *
-     * @param SessionFactory $sessionFactory
-     * @param ResourceCustomerPrice $resourceCustomerPrice
+     * @param SessionFactory        $sessionFactory        Session factory
+     * @param ResourceCustomerPrice $resourceCustomerPrice Customer price resource model
      */
     public function __construct(
         SessionFactory $sessionFactory,
@@ -53,7 +59,8 @@ class CacheIdentifier
     /**
      * Add if customer is assigned with price
      *
-     * @param array $result
+     * @param array $result Data
+     *
      * @return array
      * @throws LocalizedException
      */

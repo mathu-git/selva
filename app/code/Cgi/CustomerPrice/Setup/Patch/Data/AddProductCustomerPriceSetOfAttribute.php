@@ -26,14 +26,16 @@ use Zend_Validate_Exception;
 class AddProductCustomerPriceSetOfAttribute implements DataPatchInterface
 {
     /**
+     * Eav setup
+     *
      * @var EavSetup
      */
     protected $eavSetup;
 
     /**
-     * AddProductCustomerPriceAttribute constructor.
+     * AddProductCustomerPriceSetOfAttribute constructor.
      *
-     * @param EavSetup $eavSetup
+     * @param EavSetup $eavSetup add attribute and group in setup
      */
     public function __construct(
         EavSetup $eavSetup
@@ -42,6 +44,8 @@ class AddProductCustomerPriceSetOfAttribute implements DataPatchInterface
     }
 
     /**
+     * Get array of patches that have to be executed prior to this.
+     *
      * @return array|string[]
      */
     public static function getDependencies()
@@ -50,6 +54,8 @@ class AddProductCustomerPriceSetOfAttribute implements DataPatchInterface
     }
 
     /**
+     * Get aliases (previous names) for the patch.
+     *
      * @return array|string[]
      */
     public function getAliases()
@@ -58,6 +64,8 @@ class AddProductCustomerPriceSetOfAttribute implements DataPatchInterface
     }
 
     /**
+     * Custom attribute and group creation for products
+     *
      * @return AddProductCustomerPriceSetOfAttribute|void
      * @throws LocalizedException
      * @throws Zend_Validate_Exception

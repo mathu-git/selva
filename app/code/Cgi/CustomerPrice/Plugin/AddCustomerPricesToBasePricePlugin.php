@@ -25,11 +25,15 @@ class AddCustomerPricesToBasePricePlugin
 {
 
     /**
+     * Customer price model
+     *
      * @var AddCustomerPrice
      */
     protected $addCustomerPrice;
 
     /**
+     * Session factory
+     *
      * @var SessionFactory
      */
     protected $sessionFactory;
@@ -37,8 +41,8 @@ class AddCustomerPricesToBasePricePlugin
     /**
      * AddCustomerPricesToBasePricePlugin constructor.
      *
-     * @param SessionFactory   $sessionFactory
-     * @param AddCustomerPrice $addCustomerPrice
+     * @param SessionFactory   $sessionFactory   Session factory
+     * @param AddCustomerPrice $addCustomerPrice Customer price model
      */
     public function __construct(
         SessionFactory $sessionFactory,
@@ -51,10 +55,11 @@ class AddCustomerPricesToBasePricePlugin
     /**
      * Altered base price
      *
-     * @param Price $subject
-     * @param callable $proceed
-     * @param Product $product
-     * @param null $qty
+     * @param Price    $subject Default price model
+     * @param callable $proceed Proceed to next
+     * @param Product  $product Product
+     * @param null     $qty     Quantity
+     *
      * @return int|null
      * @throws Exception
      */
@@ -66,7 +71,6 @@ class AddCustomerPricesToBasePricePlugin
             $customerId = $customerSession->getId();
         } else {
             return $proceed($product, $qty);
-
         }
 
         $price = $this->addCustomerPrice->changeProductPrice($product, $customerId);

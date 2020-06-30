@@ -23,11 +23,15 @@ use Magento\Customer\Model\SessionFactory;
 class AddCustomerPricesToTierPricePlugin
 {
     /**
+     * Customer price model
+     *
      * @var AddCustomerPrice
      */
     protected $addCustomerPrice;
 
     /**
+     * Session factory
+     *
      * @var SessionFactory
      */
     protected $sessionFactory;
@@ -35,8 +39,8 @@ class AddCustomerPricesToTierPricePlugin
     /**
      * AddCustomerPricesToTierPricePlugin constructor
      *
-     * @param AddCustomerPrice $addCustomerPrice
-     * @param SessionFactory   $sessionFactory
+     * @param AddCustomerPrice $addCustomerPrice Customer price model
+     * @param SessionFactory   $sessionFactory   Session factory
      */
     public function __construct(
         AddCustomerPrice $addCustomerPrice,
@@ -49,8 +53,9 @@ class AddCustomerPricesToTierPricePlugin
     /**
      * Altered tier price
      *
-     * @param  TierPrice  $subject
-     * @param  bool|float $result
+     * @param TierPrice  $subject Tier price
+     * @param bool|float $result  Price
+     *
      * @return float|null
      * @throws Exception
      */
@@ -62,7 +67,6 @@ class AddCustomerPricesToTierPricePlugin
             $customerId = $customerSession->getId();
         } else {
             return $result;
-
         }
 
         $product = $subject->getProduct();

@@ -23,11 +23,15 @@ use Magento\Catalog\Model\ResourceModel\Product\Collection;
 class AddCustomerPrice
 {
     /**
+     * Customer price resource model
+     *
      * @var ResourceCustomerPrice
      */
     protected $customerPriceResourceModel;
 
     /**
+     * Price data cache
+     *
      * @var array
      */
     protected $cachePricesData;
@@ -35,7 +39,7 @@ class AddCustomerPrice
     /**
      * AddCustomerPrice constructor.
      *
-     * @param ResourceCustomerPrice $customerPriceResourceModel
+     * @param ResourceCustomerPrice $customerPriceResourceModel Customer price resource model
      */
     public function __construct(
         ResourceCustomerPrice $customerPriceResourceModel
@@ -46,9 +50,11 @@ class AddCustomerPrice
     /**
      * Change Collection Price
      *
-     * @param  Collection $collection
-     * @param  array      $ids
-     * @param  int        $customerId
+     * @param Collection $collection Customer price collection
+     * @param array      $ids        Product ids
+     * @param int        $customerId Customer id
+     *
+     * @return $this|void
      * @throws Exception
      */
     public function changeCollectionPrice($collection, $ids, $customerId)
@@ -73,7 +79,11 @@ class AddCustomerPrice
                     continue;
                 }
                 if (isset($productPrice['value']) && $productPrice['value'] >= 0) {
-                    /** @var PriceAttributeId $priceAttributeId */
+                    /**
+                     * Price attribute id
+                     *
+                     * @var PriceAttributeId $priceAttributeId
+                     */
                     if ($priceAttributeId == $productPrice['attribute_id']) {
                         $this->cachePricesData[$productId][$customerId]['price'] = (float)$productPrice['value'];
                     }
@@ -90,8 +100,9 @@ class AddCustomerPrice
     /**
      * Change Product Price
      *
-     * @param  Product $product
-     * @param  int     $customerId
+     * @param Product $product    Product
+     * @param int     $customerId Customer id
+     *
      * @return float|null
      * @throws Exception
      */
@@ -115,7 +126,11 @@ class AddCustomerPrice
 
             foreach ($calculatedCustomerProductPrices as $productPrice) {
                 if (isset($productPrice['value']) && $productPrice['value'] >= 0) {
-                    /** @var PriceAttributeId $priceAttributeId */
+                    /**
+                     * Price attribute id
+                     *
+                     * @var PriceAttributeId $priceAttributeId
+                     */
                     if ($priceAttributeId == $productPrice['attribute_id']) {
                         $price = (float)$productPrice['value'];
                         $product->setData('price', $price);
@@ -131,8 +146,9 @@ class AddCustomerPrice
     /**
      * Change Product Regular Price
      *
-     * @param  Product $product
-     * @param  int     $customerId
+     * @param Product $product    Product
+     * @param int     $customerId Customer id
+     *
      * @return float|null
      * @throws Exception
      */
@@ -152,14 +168,17 @@ class AddCustomerPrice
             }
 
             foreach ($calculatedCustomerProductPrices as $productPrice) {
-                /** @var PriceAttributeId $priceAttributeId */
+                /**
+                 * Price attribute id
+                 *
+                 * @var PriceAttributeId $priceAttributeId
+                 */
                 if (isset($productPrice['value']) && $productPrice['value'] >= 0
                     && $priceAttributeId == $productPrice['attribute_id']
                 ) {
                     $regularPrice = (float)$productPrice['value'];
                     $product->setData('price', $regularPrice);
                     $this->cachePricesData[$productId][$customerId]['regular_price'] = $regularPrice;
-
                 }
             }
         }
@@ -170,8 +189,9 @@ class AddCustomerPrice
     /**
      * Change Product Special Price
      *
-     * @param  Product $product
-     * @param  int     $customerId
+     * @param Product $product    Product
+     * @param int     $customerId Customer id
+     *
      * @return float|null
      * @throws Exception
      */
@@ -195,7 +215,11 @@ class AddCustomerPrice
 
             foreach ($calculatedCustomerProductPrices as $productPrice) {
                 if (isset($productPrice['value']) && $productPrice['value'] >= 0) {
-                    /** @var PriceAttributeId $priceAttributeId */
+                    /**
+                     * Price attribute id
+                     *
+                     * @var PriceAttributeId $priceAttributeId
+                     */
                     if ($priceAttributeId == $productPrice['attribute_id']) {
                         $specialPrice = (float)$productPrice['value'];
                         $product->setData('special_price', $specialPrice);
@@ -211,8 +235,9 @@ class AddCustomerPrice
     /**
      * Change Product Tier Price
      *
-     * @param  Product $product
-     * @param  int     $customerId
+     * @param Product $product    Product
+     * @param int     $customerId Customer id
+     *
      * @return float|null
      * @throws Exception
      */
@@ -236,7 +261,11 @@ class AddCustomerPrice
 
             foreach ($calculatedCustomerProductPrices as $productPrice) {
                 if (isset($productPrice['value']) && $productPrice['value'] >= 0) {
-                    /** @var PriceAttributeId $priceAttributeId */
+                    /**
+                     * Price attribute id
+                     *
+                     * @var PriceAttributeId $priceAttributeId
+                     */
                     if ($priceAttributeId == $productPrice['attribute_id']) {
                         $tierPrice = (float)$productPrice['value'];
                         $product->setData('tier_price', $tierPrice);
