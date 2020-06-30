@@ -22,6 +22,8 @@ use Magento\Framework\Exception\LocalizedException;
 class ChangeCacheIdentifier
 {
     /**
+     * Cache identifier
+     *
      * @var CacheIdentifier
      */
     protected $cacheIdentifier;
@@ -29,7 +31,7 @@ class ChangeCacheIdentifier
     /**
      * ChangeCacheIdentifier constructor.
      *
-     * @param CacheIdentifier $cacheIdentifier
+     * @param CacheIdentifier $cacheIdentifier Cache identifier
      */
     public function __construct(
         CacheIdentifier $cacheIdentifier
@@ -40,8 +42,9 @@ class ChangeCacheIdentifier
     /**
      * Change cache if customer is assigned with price
      *
-     * @param Context $subject
-     * @param array $result
+     * @param Context $subject Context
+     * @param array   $result  Context data
+     *
      * @return array
      * @throws LocalizedException
      */

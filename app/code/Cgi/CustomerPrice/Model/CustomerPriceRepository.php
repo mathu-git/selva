@@ -35,41 +35,57 @@ use Magento\Framework\Serialize\Serializer\Serialize;
 class CustomerPriceRepository implements CustomerPriceRepositoryInterface
 {
     /**
+     * Customer price collection
+     *
      * @var CustomerPriceCollectionFactory
      */
     protected $customerPriceCollectionFactory;
 
     /**
+     * Customer price resource model
+     *
      * @var CustomerPriceResourceModel
      */
     protected $customerPriceResourceModel;
 
     /**
+     * Customer price factory
+     *
      * @var CustomerPriceFactory
      */
     protected $priceModelFactory;
 
     /**
+     * Customer price array
+     *
      * @var CustomerPrice[]
      */
     protected $instances = [];
 
     /**
+     * Search results interface
+     *
      * @var SearchResultsInterfaceFactory
      */
     protected $searchResultsFactory;
 
     /**
+     * Search criteria builder
+     *
      * @var SearchCriteriaBuilder
      */
     protected $searchCriteriaBuilder;
 
     /**
+     * Serializer
+     *
      * @var Serialize
      */
     protected $serializer;
 
     /**
+     * Instance
+     *
      * @var |null
      */
     protected $instancesById;
@@ -77,12 +93,12 @@ class CustomerPriceRepository implements CustomerPriceRepositoryInterface
     /**
      * CustomerPriceRepository constructor.
      *
-     * @param CustomerPriceCollectionFactory $customerPriceCollectionFactory
-     * @param CustomerPriceResourceModel     $customerPriceResourceModel
-     * @param CustomerPriceFactory           $priceModelFactory
-     * @param SearchResultsInterfaceFactory  $searchResultsFactory
-     * @param SearchCriteriaBuilder          $searchCriteriaBuilder
-     * @param Serialize                      $serializer
+     * @param CustomerPriceCollectionFactory $customerPriceCollectionFactory Customer price collection
+     * @param CustomerPriceResourceModel     $customerPriceResourceModel     Customer price resource model
+     * @param CustomerPriceFactory           $priceModelFactory              Customer price factory
+     * @param SearchResultsInterfaceFactory  $searchResultsFactory           Search results factory
+     * @param SearchCriteriaBuilder          $searchCriteriaBuilder          Search criteria builder
+     * @param Serialize                      $serializer                     Serializer
      */
     public function __construct(
         CustomerPriceCollectionFactory $customerPriceCollectionFactory,
@@ -103,8 +119,9 @@ class CustomerPriceRepository implements CustomerPriceRepositoryInterface
     /**
      * Save customer price in custom table
      *
-     * @param  CustomerPriceInterface $price
-     * @param  bool                   $saveOptions
+     * @param CustomerPriceInterface $price       Price
+     * @param bool                   $saveOptions save or not
+     *
      * @return CustomerPriceInterface|void
      * @throws CouldNotSaveException
      * @throws LocalizedException
@@ -140,10 +157,11 @@ class CustomerPriceRepository implements CustomerPriceRepositoryInterface
     /**
      * Get product customer price for customers
      *
-     * @param  $customerPriceId
-     * @param  bool $editMode
-     * @param  null $storeId
-     * @param  bool $forceReload
+     * @param $customerPriceId Customer price id
+     * @param bool $editMode        Edit mode or not
+     * @param null $storeId         Store id
+     * @param bool $forceReload     Reload or not
+     *
      * @return mixed|null
      * @throws NoSuchEntityException
      */
@@ -155,7 +173,7 @@ class CustomerPriceRepository implements CustomerPriceRepositoryInterface
             if ($editMode) {
                 $price->setData('_edit_mode', true);
             }
-            $this->customerPriceResourceModel->load($price,$customerPriceId);
+            $this->customerPriceResourceModel->load($price, $customerPriceId);
             if (!$price->getId()) {
                 throw new NoSuchEntityException(__('Requested Record doesn\'t exist'));
             }
@@ -168,7 +186,8 @@ class CustomerPriceRepository implements CustomerPriceRepositoryInterface
     /**
      * Get cache key
      *
-     * @param  array $data
+     * @param array $data Cache data
+     *
      * @return string
      */
     protected function getCacheKey($data)
@@ -188,8 +207,9 @@ class CustomerPriceRepository implements CustomerPriceRepositoryInterface
     /**
      * Load customer price data collection by given search criteria
      *
-     * @param  SearchCriteriaInterface $criteria
-     * @param  bool                    $returnRawObjects
+     * @param SearchCriteriaInterface $criteria         Search criteria
+     * @param bool                    $returnRawObjects return object or not
+     *
      * @return SearchResultsInterface|ResourceRate\Collection
      */
     public function getList(SearchCriteriaInterface $criteria, $returnRawObjects = false)
@@ -214,6 +234,8 @@ class CustomerPriceRepository implements CustomerPriceRepositoryInterface
         $sortOrders = $criteria->getSortOrders();
         if ($sortOrders) {
             /**
+             * Sort order
+             *
              * @var SortOrder $sortOrder
              */
             foreach ($sortOrders as $sortOrder) {
@@ -238,7 +260,8 @@ class CustomerPriceRepository implements CustomerPriceRepositoryInterface
     /**
      * Delete product customer price for customers
      *
-     * @param  CustomerPriceInterface $price
+     * @param CustomerPriceInterface $price Customer price
+     *
      * @return bool
      * @throws CouldNotSaveException
      * @throws StateException

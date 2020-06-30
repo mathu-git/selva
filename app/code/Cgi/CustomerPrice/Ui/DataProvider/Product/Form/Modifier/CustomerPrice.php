@@ -22,11 +22,15 @@ use Magento\Framework\App\RequestInterface;
 class CustomerPrice extends AbstractModifier
 {
     /**
+     * Request interface
+     *
      * @var RequestInterface
      */
     protected $request;
 
     /**
+     * Locator interface
+     *
      * @var LocatorInterface
      */
     protected $locator;
@@ -34,8 +38,8 @@ class CustomerPrice extends AbstractModifier
     /**
      * CustomerPrice constructor.
      *
-     * @param RequestInterface $request
-     * @param LocatorInterface $locator
+     * @param RequestInterface $request Request interface
+     * @param LocatorInterface $locator Locator interface
      */
     public function __construct(
         RequestInterface $request,
@@ -48,7 +52,8 @@ class CustomerPrice extends AbstractModifier
     /**
      * Modify data
      *
-     * @param array $data
+     * @param array $data Data
+     *
      * @return array
      */
     public function modifyData(array $data)
@@ -59,7 +64,8 @@ class CustomerPrice extends AbstractModifier
     /**
      * Modify meta
      *
-     * @param array $meta
+     * @param array $meta Meta
+     *
      * @return array
      */
     public function modifyMeta(array $meta)

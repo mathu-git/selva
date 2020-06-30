@@ -23,11 +23,15 @@ use Magento\Customer\Model\SessionFactory;
 class AddCustomerPricesToRegularPricePlugin
 {
     /**
+     * Customer price model
+     *
      * @var AddCustomerPrice
      */
     protected $addCustomerPrice;
 
     /**
+     * Session factory
+     *
      * @var SessionFactory
      */
     protected $sessionFactory;
@@ -35,8 +39,8 @@ class AddCustomerPricesToRegularPricePlugin
     /**
      * AddCustomerPricesToRegularPricePlugin constructor.
      *
-     * @param SessionFactory   $sessionFactory
-     * @param AddCustomerPrice $addCustomerPrice
+     * @param SessionFactory   $sessionFactory   Session factory
+     * @param AddCustomerPrice $addCustomerPrice Customer price model
      */
     public function __construct(
         SessionFactory $sessionFactory,
@@ -49,8 +53,9 @@ class AddCustomerPricesToRegularPricePlugin
     /**
      * Altered regular price
      *
-     * @param  RegularPrice $subject
-     * @param  bool|float   $result
+     * @param RegularPrice $subject Regular price
+     * @param bool|float   $result  Price
+     *
      * @return float|null
      * @throws Exception
      */

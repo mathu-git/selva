@@ -22,6 +22,8 @@ use Cgi\CustomerPrice\Model\CacheIdentifier;
 class ChangeWidgetCacheIdentifier
 {
     /**
+     * Cache identifier
+     *
      * @var CacheIdentifier
      */
     protected $cacheIdentifier;
@@ -29,7 +31,7 @@ class ChangeWidgetCacheIdentifier
     /**
      * ChangeCacheIdentifier constructor.
      *
-     * @param CacheIdentifier $cacheIdentifier
+     * @param CacheIdentifier $cacheIdentifier Cache identifier
      */
     public function __construct(
         CacheIdentifier $cacheIdentifier
@@ -40,8 +42,9 @@ class ChangeWidgetCacheIdentifier
     /**
      * Change widget cache if customer is assigned with price
      *
-     * @param AbstractBlock $subject
-     * @param array $result
+     * @param AbstractBlock $subject Abstract block
+     * @param array         $result  Cache key info
+     *
      * @return array
      * @throws LocalizedException
      */

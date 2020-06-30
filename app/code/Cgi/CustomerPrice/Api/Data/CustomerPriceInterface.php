@@ -18,7 +18,7 @@ namespace Cgi\CustomerPrice\Api\Data;
 interface CustomerPriceInterface
 {
     /**
-     * constants of customer price
+     * Constants of customer price
      */
     public const ENTITY_ID = 'entity_id';
     public const ATTRIBUTE_TYPE = 'attribute_type';
@@ -64,15 +64,17 @@ interface CustomerPriceInterface
     /**
      * Set id
      *
-     * @param  int
+     * @param int $id Id
+     *
      * @return $this
      */
     public function setId($id);
 
     /**
-     * set attribute_type
+     * Set attribute_type
      *
-     * @param  int
+     * @param int $AttributeType Attribute type
+     *
      * @return $this
      */
     public function setAttributeType($AttributeType);
@@ -80,7 +82,8 @@ interface CustomerPriceInterface
     /**
      * Set customer_id
      *
-     * @param  int
+     * @param int $customerId Customer id
+     *
      * @return $this
      */
     public function setCustomerId($customerId);
@@ -88,7 +91,8 @@ interface CustomerPriceInterface
     /**
      * Set product_id
      *
-     * @param  int
+     * @param int $productId Product id
+     *
      * @return $this
      */
     public function setProductId($productId);
@@ -96,9 +100,9 @@ interface CustomerPriceInterface
     /**
      * Set price
      *
-     * @param  string
+     * @param string $customerPrice Price
+     *
      * @return $this
      */
     public function setPrice($customerPrice);
-
 }

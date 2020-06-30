@@ -25,11 +25,15 @@ use Magento\Framework\Event\ObserverInterface;
 class CustomerPriceCollectionObserver implements ObserverInterface
 {
     /**
+     * Session factory
+     *
      * @var SessionFactory
      */
     protected $sessionFactory;
 
     /**
+     * Customer price model
+     *
      * @var AddCustomerPrice
      */
     protected $addCustomerPrice;
@@ -37,8 +41,8 @@ class CustomerPriceCollectionObserver implements ObserverInterface
     /**
      * CustomerPriceCollectionObserver constructor.
      *
-     * @param SessionFactory   $sessionFactory
-     * @param AddCustomerPrice $addCustomerPrice
+     * @param SessionFactory   $sessionFactory   Session factory
+     * @param AddCustomerPrice $addCustomerPrice Customer price model
      */
     public function __construct(
         SessionFactory $sessionFactory,
@@ -51,13 +55,16 @@ class CustomerPriceCollectionObserver implements ObserverInterface
     /**
      * Load product collection with customer price
      *
-     * @param EventObserver $observer
+     * @param EventObserver $observer Customer price collection observer
+     *
      * @return $this|void
      * @throws Exception
      */
     public function execute(EventObserver $observer)
     {
         /**
+         * Customer price collection
+         *
          * @var Collection $collection
          */
         $collection = $observer->getData('collection');
@@ -65,7 +72,6 @@ class CustomerPriceCollectionObserver implements ObserverInterface
         $customerSession = $this->sessionFactory->create();
 
         if ($customerSession->isLoggedIn() && $collection->getSize()) {
-
             $customerId = $customerSession->getId();
             $ids = $this->getIds($collection);
 
@@ -80,7 +86,8 @@ class CustomerPriceCollectionObserver implements ObserverInterface
     /**
      * Get ids of products
      *
-     * @param  Collection $collection
+     * @param Collection $collection Customer price collection
+     *
      * @return array
      * @throws Exception
      */
